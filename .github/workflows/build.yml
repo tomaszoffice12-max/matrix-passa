@@ -27,6 +27,10 @@ jobs:
           channel: 'stable'
           cache: true
 
+      # Ten krok automatycznie tworzy brakujące pliki Androida (Gradle itp.)
+      - name: Create Android scaffolding
+        run: flutter create . --org com.matrix.passa --project-name health_streak_app --platforms=android
+
       - name: Install dependencies
         run: flutter pub get
 
