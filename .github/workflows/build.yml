@@ -27,16 +27,26 @@ jobs:
           channel: 'stable'
           cache: true
 
-      # Ten krok automatycznie tworzy brakujące pliki Androida (Gradle itp.)
+      # 1. Tworzy pliki systemowe Androida
       - name: Create Android scaffolding
         run: flutter create . --org com.matrix.passa --project-name health_streak_app --platforms=android
 
+      # 2. Dodaje wymagane biblioteki
+      - name: Add required dependencies
+        run: |
+          flutter pub add health
+          flutter pub add shared_preferences
+          flutter pub add flutter_local_notifications
+
+      # 3. Pobiera paczki
       - name: Install dependencies
         run: flutter pub get
 
+      # 4. Buduje gotowy plik APK
       - name: Build Release APK
         run: flutter build apk --release
 
+      # 5. Udostępnia plik APK do pobrania
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
